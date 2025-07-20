@@ -5,7 +5,7 @@ import MapView, { Marker, Polyline } from 'react-native-maps';
 
 const FIRST_KM_RATE = 100;
 const NEXT_KM_RATE = 80;
-const WAITING_RATE_PER_MINUTE = 4;
+const WAITING_RATE_PER_MINUTE = 4; 
 
 function getDistance(from: Location.LocationObjectCoords, to: Location.LocationObjectCoords) {
   const R = 6371; 
@@ -73,7 +73,7 @@ export default function TukMeterLiveApp() {
 
 
   const startJourney = async () => {
-    
+
     setPathCoordinates([]);
     setTotalDistance(0);
     setWaitingTime(0);
@@ -134,6 +134,23 @@ export default function TukMeterLiveApp() {
         }}
       >
         <Polyline coordinates={pathCoordinates} strokeColor="#1e90ff" strokeWidth={6} />
+        
+        {pathCoordinates.length > 0 && (
+          <Marker
+            coordinate={pathCoordinates[0]}
+            title="Start Point"
+            pinColor="green"
+          />
+        )}
+
+        {!isJourneyActive && pathCoordinates.length > 1 && (
+          <Marker
+            coordinate={pathCoordinates[pathCoordinates.length - 1]}
+            title="End Point"
+            pinColor="red"
+          />
+        )}
+
       </MapView>
 
       <View style={styles.bottomContainer}>
@@ -189,7 +206,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 20,
     paddingVertical: 20,
     paddingHorizontal: 16,
-    paddingBottom: 30,
+    paddingBottom: 30, 
     shadowColor: '#000',
     shadowOffset: { width: 0, height: -2 },
     shadowOpacity: 0.1,
